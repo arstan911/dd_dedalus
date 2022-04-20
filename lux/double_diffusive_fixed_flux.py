@@ -42,8 +42,8 @@ invDensRatio= 1.5
 
 
 # Create bases and domain
-x_basis = de.Fourier('x', 512, interval=(0, Lx), dealias=3/2)
-z_basis = de.Chebyshev('z', 64, interval=(-Lz/2, Lz/2), dealias=3/2)
+x_basis = de.Fourier('x', 2048, interval=(0, Lx), dealias=3/2)
+z_basis = de.Chebyshev('z', 128, interval=(-Lz/2, Lz/2), dealias=3/2)
 domain = de.Domain([x_basis, z_basis], grid_dtype=np.float64)
 
 # 2D Boussinesq hydrodynamics
@@ -95,7 +95,7 @@ if not pathlib.Path('restart.h5').exists():
     # Linear background + perturbations damped at walls
     zb, zt = z_basis.interval
     pert =  1e-3 * noise * (zt - z) * (z - zb)
-    Comp['g'] = pert - z*R0m1 
+    Comp['g'] = pert - z*invDensRatio 
     Comp.differentiate('z', out=Compz)
 
     # Timestepping and output
