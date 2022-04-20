@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name="Cheb_therm" # Job name
+#SBATCH --partition=cpuq
+#SBATCH --account=cpuq
+#SBATCH --output="Cheb_therm.o%j" # Name of stdout output file
+#SBATCH --error="Cheb_therm.e%j" # Name of stderr error file
+#SBATCH --nodes=4 # Total number of nodes
+#SBATCH --ntasks=128
+#SBATCH --ntasks-per-node=32 # Total number of mpi tasks per node
+#SBATCH -t 00:45:00 # Run time (hh:mm:ss)
+module load python/3.8.6
+export OMP_NUM_THREADS=1
+mpiexec -n 128 python3 twolayer_thermohaline_hydro.py config_files/twolayer/run_F.cfg
