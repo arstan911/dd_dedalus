@@ -11,3 +11,7 @@
 module load  openmpi/4.0.1 fftw/3.3.8 python/3.8.6
 export OMP_NUM_THREADS=1
 mpiexec -n 40 python3 double_diffusive_fixed_flux.py
+mpiexec -n 40 python3 -m dedalus merge_procs snapshots
+mpiexec -n 40 python3 -m dedalus merge_procs scalars
+mpiexec -n 40 python3 -m dedalus merge_procs vertical_profiles
+mpiexec -n 40 python3 plot_slices.py
